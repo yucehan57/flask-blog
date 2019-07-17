@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+    {% block content %}
+        {% for post in posts %}
+            <ol>
+            author: {{ post.author }},
+            title: {{ post.title }}
+            <p>content: {{ post.content }}</p>
+            </ol>
+            <hr>
+        {% endfor %}
+    {% endblock %}
+
