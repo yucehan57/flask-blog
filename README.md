@@ -8,7 +8,7 @@ will provide User authentication system (register & login), privilige to add, de
 ### Likely future functionalities:
 Comment functionality for users, extended user profile page, 'fetch random blog post functionality'...
 
-### Whom does this blog targer?
+### Who are our target audience?
 The blog will try to cater to finance, business, programming lovers.
 Available sections may vary as development proceeds further.
 
