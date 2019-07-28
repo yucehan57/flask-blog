@@ -20,6 +20,10 @@ Clone the repo, create virtual environment:
     $ git clone https://github.com/yucehan57/flask-blog.git
     $ virtualenv env
     $ source/env/bin/activate
+
+Install the required dependencies:
+
+    $ pip install -r requirements.txt
     
 Create database in shell:
 
