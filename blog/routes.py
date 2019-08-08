@@ -3,7 +3,8 @@ import secrets
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, \
                   request
-from blog.forms import RegistrationForm, LoginForm, UserUpdateForm
+from blog.forms import RegistrationForm, LoginForm, \
+                       UserUpdateForm, PostForm
 from blog import app, db, bcrypt
 from blog.models import User, Post
 from flask_login import login_user, logout_user, current_user, \
@@ -30,6 +31,7 @@ posts = [
 @app.route('/')         # both routes are feeding the same view functions
 @app.route('/home')
 def home_page():
+    posts = Post.query.all()
     return render_template('home.html', posts=posts)
 
 
@@ -118,3 +120,19 @@ def account():
     image_file = url_for('static', filename='profile_pics/' + current_user.image_field)
     return render_template('account.html', title='Account', \
                             image_file=image_file, form=form)
+
+
+
+@app.route('/post/new/', methods=['GET', 'POST'])
+@login_required
+def new_post():
+    form = PostForm()
+    if form.validate_on_submit():
+        flash(f'Post created.', 'success')
+        post = Post(title=form.title.data, content=form.content.data, \
+                    user_id=current_user.id)
+        db.session.add(post)
+        db.session.commit()
+        return redirect(url_for('home_page'))
+
+    return render_template('create_post.html', title='New Post', form=form)
