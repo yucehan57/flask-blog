@@ -163,5 +163,12 @@ def delete_post(post_id):
     return redirect(url_for('home_page'))
 
 
+@app.route('/posts/<int:user_id>/')
+def users_post(user_id):
+    user = User.query.get_or_404(user_id)
+    posts = user.posts
+    return render_template('userposts.html', title="User's posts", user=user, posts=posts)
+
+
     
     
