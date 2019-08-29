@@ -15,7 +15,8 @@ from flask_login import login_user, logout_user, current_user, \
 @app.route('/')         # both routes are feeding the same view functions
 @app.route('/home')
 def home_page():
-    posts = Post.query.all()
+    page = request.args.get('page', 1, type=int)
+    posts = Post.query.order_by(Post.date_posted.desc()).paginate(per_page=5)
     return render_template('home.html', posts=posts)
 
 
@@ -163,12 +164,15 @@ def delete_post(post_id):
     return redirect(url_for('home_page'))
 
 
-@app.route('/posts/<int:user_id>/')
-def users_post(user_id):
-    user = User.query.get_or_404(user_id)
-    posts = user.posts
-    return render_template('userposts.html', title="User's posts", user=user, posts=posts)
-
+        # both routes are feeding the same view functions
+@app.route('/user/<string:username>')
+def user_posts(username):
+    page = request.args.get('page', 1, type=int)
+    user = User.query.filter_by(username=username).first_or_404()
+    posts = Post.query.filter_by(author=user)\
+        .order_by(Post.date_posted.desc())\
+        .paginate(per_page=5)
+    return render_template('userposts.html', posts=posts, user=user)
 
     
     
