@@ -18,8 +18,9 @@
             {% if page_num %}
                 {% if posts.page == page_num %}
                     <a class="btn btn-info mb-4" href="{{ url_for('user_posts', username=user.username, page=page_num) }}"> {{ page_num }}</a>
-                {% endif %}
+                {% else %}
                     <a class="btn btn-outline-info mb-4" href="{{ url_for('user_posts', username=user.username, page=page_num) }}"> {{ page_num }}</a>
+                {% endif %}
             {% else %}
                 ...
             {% endif %}
